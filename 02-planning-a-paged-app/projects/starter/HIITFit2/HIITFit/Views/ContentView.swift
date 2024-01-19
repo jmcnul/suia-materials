@@ -6,7 +6,7 @@ struct ContentView: View {
   var body: some View {
       TabView{
           WelcomeView()
-          ForEach(0 ..< 4) { index in ExerciseView (index: index)}
+          ForEach(0 ..< Exercise.exercises.count) { index in ExerciseView (index: index)}
           
           
       }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
