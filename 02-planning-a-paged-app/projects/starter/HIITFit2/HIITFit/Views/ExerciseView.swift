@@ -7,6 +7,8 @@ struct ExerciseView: View {
 
     
     @State private var showHistory = false
+    @State private var timerDone = false
+    @State private var showTimer = false
     @Binding var selectedTab: Int
     @State private var rating = 0
     @State private var showSuccess = false
@@ -25,27 +27,34 @@ struct ExerciseView: View {
                 } else {
                     Text("Couldn't find \(Exercise.exercises[index].videoName).mp4").foregroundColor(.red)
                 }
-                Text(Date().addingTimeInterval(interval), style: .timer).font(.system(size: 90))
+//                if showTimer{
+//                    TimerView(timerDone: $timerDone)
+//                }
                 HStack (spacing: 150){
-                    Button(NSLocalizedString("Start", comment: "begin exercie")) {}
+                    Button(NSLocalizedString("Start", comment: "begin exercise")) {showTimer.toggle()}
                     Button(NSLocalizedString("Done", comment: "mark as finished"))
                     {
+                        timerDone = false
+                        showTimer.toggle()
                         if lastExercise{
                             showSuccess.toggle()
                         } else {
                             selectedTab += 1
                         }
                     }
-                                .sheet(isPresented: $showSuccess){
-                                SuccessView(selectedTab: $selectedTab)
+                    .disabled(!timerDone)
+                    .sheet(isPresented: $showSuccess){
+                        SuccessView(selectedTab: $selectedTab)
                             }
                        
                 }
                     .font(.title3)
                     .padding()
-                
-                RatingView(rating: $rating).padding()
+                if showTimer{
+                    TimerView(timerDone: $timerDone)
+                }
                 Spacer()
+                RatingView(rating: $rating).padding()
                 Button(NSLocalizedString("History", comment: "view user activity")) {
                     showHistory.toggle()
                 }
