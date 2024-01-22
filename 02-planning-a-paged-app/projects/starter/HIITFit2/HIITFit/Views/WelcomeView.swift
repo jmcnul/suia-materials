@@ -25,7 +25,6 @@ struct WelcomeView: View {
                     VStack{
                         Text(NSLocalizedString("Get Fit", comment: "invitation to exercise"))
                             .font(.largeTitle)
-                        Text("Hey watch it with those foo hairs!!!!").font(.largeTitle)
                         Text("with high intensity interval training")
                             .font(.headline)
                     }

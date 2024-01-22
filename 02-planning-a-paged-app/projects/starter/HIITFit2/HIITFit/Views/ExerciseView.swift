@@ -9,6 +9,7 @@ struct ExerciseView: View {
     @State private var showHistory = false
     @State private var timerDone = false
     @State private var showTimer = false
+    @EnvironmentObject var history: HistoryStore
     @Binding var selectedTab: Int
     @State private var rating = 0
     @State private var showSuccess = false
@@ -34,6 +35,7 @@ struct ExerciseView: View {
                     Button(NSLocalizedString("Start", comment: "begin exercise")) {showTimer.toggle()}
                     Button(NSLocalizedString("Done", comment: "mark as finished"))
                     {
+                        history.addDoneExercise(Exercise.exercises[index].exerciseName)
                         timerDone = false
                         showTimer.toggle()
                         if lastExercise{
@@ -70,7 +72,8 @@ struct ExerciseView: View {
 
 struct ExerciseView_Previews: PreviewProvider {
   static var previews: some View {
-      ExerciseView(selectedTab: .constant(3), index: 3)
+      ExerciseView(selectedTab: .constant(0), index: 0)
+          .environmentObject(HistoryStore())
   }
 }
 
